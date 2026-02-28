@@ -1,0 +1,6 @@
+# Python dependencies for ARM (Debian/Ubuntu) — install with: pip3 install -r requirements_arm.txt
+# Uses the headless OpenCV build which avoids pulling in a full GUI stack via pip.
+opencv-python-headless>=4.8.0
+Pillow>=10.0.0
+numpy>=1.24.0
+pytz>=2025.1

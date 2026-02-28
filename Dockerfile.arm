@@ -1,0 +1,33 @@
+# Docker image for ARM devices (32-bit ARMv7)
+FROM arm32v7/python:3.9-slim-bullseye
+
+# Working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    python3-tk \
+    libopencv-dev \
+    libatlas-base-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libavcodec-dev \
+    libavformat-dev \
+    libswscale-dev \
+    libgtk-3-dev \
+    ffmpeg \
+    x11-apps \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy and install Python dependencies
+COPY requirements_arm.txt .
+RUN pip3 install --no-cache-dir -r requirements_arm.txt
+
+# Copy application
+COPY cctv_monitor.py .
+
+# Forward X11 display from the host
+ENV DISPLAY=:0
+
+# Run the monitor
+CMD ["python3", "cctv_monitor.py"]
